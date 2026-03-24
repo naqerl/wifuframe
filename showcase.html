@@ -202,7 +202,7 @@ page:
             editorDiv.id = `editor-${index}`;
 
             const previewDiv = document.createElement('div');
-            previewDiv.className = 'w-2/3';
+            previewDiv.className = 'w-2/3 flex items-center justify-center';
             previewDiv.innerHTML = `<div class="wf">${renderExample(index, example.code)}</div>`;
             previewDiv.id = `preview-${index}`;
             
