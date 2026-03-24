@@ -64,13 +64,15 @@
         <h2>Basic Elements</h2>
         <div class="example-grid">
             <div class="yaml-source">
-                <pre>title: Hello World
-text: This is a simple text element
-button: Click Me</pre>
+                <pre>page:
+  - title: Hello World
+  - text: This is a simple text element
+  - button: Click Me</pre>
             </div>
-            <pre class="language-wifuframe">title: Hello World
-text: This is a simple text element
-button: Click Me</pre>
+            <pre class="language-wifuframe">page:
+  - title: Hello World
+  - text: This is a simple text element
+  - button: Click Me</pre>
         </div>
     </div>
 
@@ -78,25 +80,27 @@ button: Click Me</pre>
         <h2>Button Variants</h2>
         <div class="example-grid">
             <div class="yaml-source">
-                <pre>button:
-  text: Primary
-  type: primary
-button:
-  text: Danger
-  type: danger
-button:
-  text: Success
-  type: success</pre>
+                <pre>page:
+  - button:
+      text: Primary
+      type: primary
+  - button:
+      text: Danger
+      type: danger
+  - button:
+      text: Success
+      type: success</pre>
             </div>
-            <pre class="language-wifuframe">button:
-  text: Primary
-  type: primary
-button:
-  text: Danger
-  type: danger
-button:
-  text: Success
-  type: success</pre>
+            <pre class="language-wifuframe">page:
+  - button:
+      text: Primary
+      type: primary
+  - button:
+      text: Danger
+      type: danger
+  - button:
+      text: Success
+      type: success</pre>
         </div>
     </div>
 
@@ -104,31 +108,33 @@ button:
         <h2>Text Colors</h2>
         <div class="example-grid">
             <div class="yaml-source">
-                <pre>text:
-  value: Secondary text
-  color: secondary
-text:
-  value: Success message
-  color: success
-text:
-  value: Error message
-  color: danger
-text:
-  value: Primary info
-  color: primary</pre>
+                <pre>page:
+  - text:
+      value: Secondary text
+      color: secondary
+  - text:
+      value: Success message
+      color: success
+  - text:
+      value: Error message
+      color: danger
+  - text:
+      value: Primary info
+      color: primary</pre>
             </div>
-            <pre class="language-wifuframe">text:
-  value: Secondary text
-  color: secondary
-text:
-  value: Success message
-  color: success
-text:
-  value: Error message
-  color: danger
-text:
-  value: Primary info
-  color: primary</pre>
+            <pre class="language-wifuframe">page:
+  - text:
+      value: Secondary text
+      color: secondary
+  - text:
+      value: Success message
+      color: success
+  - text:
+      value: Error message
+      color: danger
+  - text:
+      value: Primary info
+      color: primary</pre>
         </div>
     </div>
 
@@ -136,27 +142,29 @@ text:
         <h2>Layout - Row & Columns</h2>
         <div class="example-grid">
             <div class="yaml-source">
-                <pre>row:
-  - col:
-      title: Column 1
-      text: First column content
-  - col:
-      title: Column 2
-      text: Second column content
-  - col:
-      title: Column 3
-      text: Third column content</pre>
+                <pre>page:
+  - row:
+      - col:
+          - title: Column 1
+          - text: First column content
+      - col:
+          - title: Column 2
+          - text: Second column content
+      - col:
+          - title: Column 3
+          - text: Third column content</pre>
             </div>
-            <pre class="language-wifuframe">row:
-  - col:
-      title: Column 1
-      text: First column content
-  - col:
-      title: Column 2
-      text: Second column content
-  - col:
-      title: Column 3
-      text: Third column content</pre>
+            <pre class="language-wifuframe">page:
+  - row:
+      - col:
+          - title: Column 1
+          - text: First column content
+      - col:
+          - title: Column 2
+          - text: Second column content
+      - col:
+          - title: Column 3
+          - text: Third column content</pre>
         </div>
     </div>
 
@@ -164,29 +172,31 @@ text:
         <h2>Card Block</h2>
         <div class="example-grid">
             <div class="yaml-source">
-                <pre>block:
-  title: Card Title
-  text: Card description text
-  row:
-    - button:
-        text: Cancel
-        type: secondary
-    - spacer
-    - button:
-        text: Save
-        type: primary</pre>
+                <pre>page:
+  - block:
+      - title: Card Title
+      - text: Card description text
+      - row:
+          - button:
+              text: Cancel
+              type: secondary
+          - spacer
+          - button:
+              text: Save
+              type: primary</pre>
             </div>
-            <pre class="language-wifuframe">block:
-  title: Card Title
-  text: Card description text
-  row:
-    - button:
-        text: Cancel
-        type: secondary
-    - spacer
-    - button:
-        text: Save
-        type: primary</pre>
+            <pre class="language-wifuframe">page:
+  - block:
+      - title: Card Title
+      - text: Card description text
+      - row:
+          - button:
+              text: Cancel
+              type: secondary
+          - spacer
+          - button:
+              text: Save
+              type: primary</pre>
         </div>
     </div>
 
@@ -194,31 +204,33 @@ text:
         <h2>Form Elements</h2>
         <div class="example-grid">
             <div class="yaml-source">
-                <pre>title: Login Form
-text: Please enter your credentials
-input:
-  value: Username
-input:
-  value: Password
-row:
-  - button:
-      text: Login
-      type: primary
-  - button:
-      text: Forgot Password</pre>
+                <pre>page:
+  - title: Login Form
+  - text: Please enter your credentials
+  - input:
+      value: Username
+  - input:
+      value: Password
+  - row:
+      - button:
+          text: Login
+          type: primary
+      - button:
+          text: Forgot Password</pre>
             </div>
-            <pre class="language-wifuframe">title: Login Form
-text: Please enter your credentials
-input:
-  value: Username
-input:
-  value: Password
-row:
-  - button:
-      text: Login
-      type: primary
-  - button:
-      text: Forgot Password</pre>
+            <pre class="language-wifuframe">page:
+  - title: Login Form
+  - text: Please enter your credentials
+  - input:
+      value: Username
+  - input:
+      value: Password
+  - row:
+      - button:
+          text: Login
+          type: primary
+      - button:
+          text: Forgot Password</pre>
         </div>
     </div>
 
@@ -226,15 +238,17 @@ row:
         <h2>Image Placeholder</h2>
         <div class="example-grid">
             <div class="yaml-source">
-                <pre>title: Gallery
-image: Product Photo
-image: Another Image
-image: Third Image</pre>
+                <pre>page:
+  - title: Gallery
+  - image: Product Photo
+  - image: Another Image
+  - image: Third Image</pre>
             </div>
-            <pre class="language-wifuframe">title: Gallery
-image: Product Photo
-image: Another Image
-image: Third Image</pre>
+            <pre class="language-wifuframe">page:
+  - title: Gallery
+  - image: Product Photo
+  - image: Another Image
+  - image: Third Image</pre>
         </div>
     </div>
 
@@ -244,29 +258,31 @@ image: Third Image</pre>
             <div class="yaml-source">
                 <pre>---
 device: mobile
-title: Mobile App
-row:
-  - button: Home
-  - button: Profile
-  - button: Settings
-text: Welcome to the mobile app
-image: Screenshot
-button:
-  text: Get Started
-  type: primary</pre>
+page:
+  - title: Mobile App
+  - row:
+      - button: Home
+      - button: Profile
+      - button: Settings
+  - text: Welcome to the mobile app
+  - image: Screenshot
+  - button:
+      text: Get Started
+      type: primary</pre>
             </div>
             <pre class="language-wifuframe">---
 device: mobile
-title: Mobile App
-row:
-  - button: Home
-  - button: Profile
-  - button: Settings
-text: Welcome to the mobile app
-image: Screenshot
-button:
-  text: Get Started
-  type: primary</pre>
+page:
+  - title: Mobile App
+  - row:
+      - button: Home
+      - button: Profile
+      - button: Settings
+  - text: Welcome to the mobile app
+  - image: Screenshot
+  - button:
+      text: Get Started
+      type: primary</pre>
         </div>
     </div>
 
@@ -277,31 +293,32 @@ button:
                 <pre>---
 device: desktop
 page:
-  title: Desktop Dashboard
-  row:
-    - block:
-        title: Stats
-        text: 1,234 users
-    - block:
-        title: Revenue
-        text: $12,345
-    - block:
-        title: Growth
-        text: +23%</pre>
+  - title: Desktop Dashboard
+  - row:
+      - block:
+          - title: Stats
+          - text: 1,234 users
+      - block:
+          - title: Revenue
+          - text: $12,345
+      - block:
+          - title: Growth
+          - text: +23%</pre>
             </div>
             <pre class="language-wifuframe">---
 device: desktop
-title: Desktop Dashboard
-row:
-  - block:
-      title: Stats
-      text: 1,234 users
-  - block:
-      title: Revenue
-      text: $12,345
-  - block:
-      title: Growth
-      text: +23%</pre>
+page:
+  - title: Desktop Dashboard
+  - row:
+      - block:
+          - title: Stats
+          - text: 1,234 users
+      - block:
+          - title: Revenue
+          - text: $12,345
+      - block:
+          - title: Growth
+          - text: +23%</pre>
         </div>
     </div>
 
@@ -309,21 +326,23 @@ row:
         <h2>Interactive Buttons</h2>
         <div class="example-grid">
             <div class="yaml-source">
-                <pre>title: Interactive Demo
-button:
-  text: Show Alert
-  alert: Hello from Wifuframe!
-button:
-  text: Confirm Action
-  confirm: Are you sure you want to proceed?</pre>
+                <pre>page:
+  - title: Interactive Demo
+  - button:
+      text: Show Alert
+      alert: Hello from Wifuframe!
+  - button:
+      text: Confirm Action
+      confirm: Are you sure you want to proceed?</pre>
             </div>
-            <pre class="language-wifuframe">title: Interactive Demo
-button:
-  text: Show Alert
-  alert: Hello from Wifuframe!
-button:
-  text: Confirm Action
-  confirm: Are you sure you want to proceed?</pre>
+            <pre class="language-wifuframe">page:
+  - title: Interactive Demo
+  - button:
+      text: Show Alert
+      alert: Hello from Wifuframe!
+  - button:
+      text: Confirm Action
+      confirm: Are you sure you want to proceed?</pre>
         </div>
     </div>
 
@@ -335,27 +354,29 @@ button:
 device:
   - mobile
   - desktop
-title: Responsive Design
-row:
-  - col:
-      image: Feature 1
-      text: First feature
-  - col:
-      image: Feature 2
-      text: Second feature</pre>
+page:
+  - title: Responsive Design
+  - row:
+      - col:
+          - image: Feature 1
+          - text: First feature
+      - col:
+          - image: Feature 2
+          - text: Second feature</pre>
             </div>
             <pre class="language-wifuframe">---
 device:
   - mobile
   - desktop
-title: Responsive Design
-row:
-  - col:
-      image: Feature 1
-      text: First feature
-  - col:
-      image: Feature 2
-      text: Second feature</pre>
+page:
+  - title: Responsive Design
+  - row:
+      - col:
+          - image: Feature 1
+          - text: First feature
+      - col:
+          - image: Feature 2
+          - text: Second feature</pre>
         </div>
     </div>
 
