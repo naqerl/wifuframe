@@ -17,18 +17,101 @@
         spacer: { tag: 'div', cls: 'wf-sp' },
     };
 
-    const idRegistry = new Map();
+    const HTML_ESCAPE_MAP = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+    };
 
     function esc(s) {
-        return s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+        return s.replace(/[&<>"]/g, (c) => HTML_ESCAPE_MAP[c]);
     }
+
     function escJs(s) {
         return s.replace(/['"\\]/g, '\\$&').replace(/\n/g, '\\n');
     }
 
     function parseDevice(v) {
-        const k = (v || '').toLowerCase().trim();
+        const k = String(v).toLowerCase().trim();
         return DEVICES[k] || DEVICES.mobile;
+    }
+
+    function renderChildren(val) {
+        return val
+            .map((item) => {
+                if (typeof item === 'string') {
+                    return esc(item);
+                }
+                if (item && typeof item === 'object') {
+                    return Object.entries(item)
+                        .map(([k, v]) => renderElement(k, v))
+                        .join('');
+                }
+                return '';
+            })
+            .join('');
+    }
+
+    function buildAttrs(cls, sty, extraAttrs, hasClick) {
+        const classes = cls.join(' ');
+        const style = sty.length > 0 ? ` style="${sty.join(';')}"` : '';
+        const clickAttr = hasClick && !extraAttrs.includes('onclick') ? ' onclick="void(0)" role="button"' : '';
+        return ` class="${classes}"${style}${extraAttrs}${clickAttr}`;
+    }
+
+    function processProps(rest, cls, sty, attrs) {
+        for (const [k, v] of Object.entries(rest)) {
+            switch (k) {
+                case 'type':
+                    cls.push(`wf-b--${v}`);
+                    break;
+                case 'color':
+                    cls.push(`wf-t--${v}`);
+                    break;
+                case 'align':
+                    sty.push(`text-align:${v}`);
+                    break;
+                case 'size':
+                    sty.push(`width:${String(v).endsWith('%') ? v : `${v}px`}`);
+                    break;
+                case 'alert':
+                    attrs.push(` onclick="alert('${escJs(v)}')" role="button"`);
+                    break;
+                case 'confirm':
+                    attrs.push(` onclick="if(confirm('${escJs(v)}'))this.classList.add('active')" role="button"`);
+                    break;
+                default:
+                    break;
+            }
+        }
+        return attrs.join('');
+    }
+
+    function getInner(key, text) {
+        const placeholderDiv = (cls) => `<div class="${cls}"></div>`;
+        const labelSpan = (cls, txt) => `<span class="${cls}">${esc(txt)}</span>`;
+
+        switch (key) {
+            case 'image':
+            case 'img':
+                return placeholderDiv('wf-img-ph') + (text ? labelSpan('wf-img-lb', text) : '');
+            case 'qr':
+                return placeholderDiv('wf-qr-ph') + (text ? labelSpan('wf-qr-lb', text) : '');
+            case 'barcode':
+                return placeholderDiv('wf-bc-ph') + (text ? labelSpan('wf-bc-lb', text) : '');
+            case 'avatar':
+                return text || '';
+            case 'dropdown':
+            case 'select':
+                return `<span>${esc(text || 'Select...')}</span><span>▼</span>`;
+            case 'icon':
+                return text || '◆';
+            case 'spacer':
+                return '';
+            default:
+                return esc(text);
+        }
     }
 
     function renderElement(key, val) {
@@ -41,29 +124,16 @@
         let children = '';
         const cls = [def.cls];
         const sty = [];
-        let attrs = '';
+        const attrs = [];
 
         if (val === null || val === undefined) {
             // no-op
         } else if (typeof val === 'string') {
             text = val;
         } else if (Array.isArray(val)) {
-            children = val
-                .map((item) => {
-                    if (typeof item === 'string') {
-                        return esc(item);
-                    }
-                    if (typeof item === 'object' && item !== null) {
-                        return Object.entries(item)
-                            .map(([k, v]) => renderElement(k, v))
-                            .join('');
-                    }
-                    return '';
-                })
-                .join('');
+            children = renderChildren(val);
         } else if (typeof val === 'object') {
-            const valKeys = Object.keys(val);
-            const hasElementChild = valKeys.some((k) => ELEMENTS[k]);
+            const hasElementChild = Object.keys(val).some((k) => ELEMENTS[k]);
 
             if (hasElementChild) {
                 children = Object.entries(val)
@@ -72,65 +142,18 @@
             } else {
                 const { value, v, text: t, ...rest } = val;
                 text = value || v || t || '';
-                for (const [k, v] of Object.entries(rest)) {
-                    if (k === 'type') {
-                        cls.push(`wf-b--${v}`);
-                    } else if (k === 'color') {
-                        cls.push(`wf-t--${v}`);
-                    } else if (k === 'align') {
-                        sty.push(`text-align:${v}`);
-                    } else if (k === 'size') {
-                        sty.push(`width:${String(v).endsWith('%') ? v : `${v}px`}`);
-                    } else if (k === 'alert') {
-                        attrs += ` onclick="alert('${escJs(v)}')" role="button"`;
-                    } else if (k === 'confirm') {
-                        attrs += ` onclick="if(confirm('${escJs(v)}'))this.classList.add('active')" role="button"`;
-                    }
-                }
+                processProps(rest, cls, sty, attrs);
             }
         }
 
-        attrs = ` class="${cls.join(' ')}"${sty.length > 0 ? ` style="${sty.join(';')}"` : ''}${attrs}`;
-        if (def.click && !attrs.includes('onclick')) {
-            attrs += ' onclick="void(0)" role="button"';
-        }
+        const attrsStr = buildAttrs(cls, sty, attrs.join(''), def.click);
 
         if (def.empty) {
-            return `<div${attrs}><input type="text" placeholder="${esc(text)}"/></div>`;
+            return `<div${attrsStr}><input type="text" placeholder="${esc(text)}"/></div>`;
         }
 
-        let inner = children;
-        if (!inner) {
-            switch (key) {
-                case 'image':
-                case 'img':
-                    inner = `<div class="wf-img-ph"></div>${text ? `<span class="wf-img-lb">${esc(text)}</span>` : ''}`;
-                    break;
-                case 'qr':
-                    inner = `<div class="wf-qr-ph"></div>${text ? `<span class="wf-qr-lb">${esc(text)}</span>` : ''}`;
-                    break;
-                case 'barcode':
-                    inner = `<div class="wf-bc-ph"></div>${text ? `<span class="wf-bc-lb">${esc(text)}</span>` : ''}`;
-                    break;
-                case 'avatar':
-                    inner = text || '';
-                    break;
-                case 'dropdown':
-                case 'select':
-                    inner = `<span>${esc(text || 'Select...')}</span><span>▼</span>`;
-                    break;
-                case 'icon':
-                    inner = text || '◆';
-                    break;
-                case 'spacer':
-                    inner = '';
-                    break;
-                default:
-                    inner = esc(text);
-            }
-        }
-
-        return `<${def.tag}${attrs}>${inner}</${def.tag}>`;
+        const inner = children || getInner(key, text);
+        return `<${def.tag}${attrsStr}>${inner}</${def.tag}>`;
     }
 
     function walk(node) {
@@ -144,24 +167,16 @@
             return String(node);
         }
 
-        let html = '';
-        for (const [key, val] of Object.entries(node)) {
-            if (key === 'device' || key === 'id' || key === 'ref') {
-                continue;
-            }
-            html += renderElement(key, val);
-        }
-        return html;
+        const skipKeys = new Set(['device', 'id', 'ref']);
+        return Object.entries(node)
+            .filter(([key]) => !skipKeys.has(key))
+            .map(([key, val]) => renderElement(key, val))
+            .join('');
     }
 
     function parseDocs(src) {
         const yaml = window.jsyaml || window.jsYAML || window.yaml;
         if (!yaml) {
-            for (const k of Object.keys(window)) {
-                if (k.toLowerCase().includes('yaml') && window[k] && window[k].loadAll) {
-                    return parseDocs(src);
-                }
-            }
             throw new Error('js-yaml not loaded');
         }
         return yaml.loadAll(src);
@@ -171,13 +186,10 @@
         if (!doc || typeof doc !== 'object') {
             return [{ dev: null, html: '', id: null, ref: null }];
         }
-        const dev = doc.device;
-        const id = doc.id;
-        const ref = doc.ref;
-        doc.device = undefined;
-        doc.id = undefined;
-        doc.ref = undefined;
-        const html = walk(doc);
+
+        const { device: dev, id, ref, ...restDoc } = doc;
+        const html = walk(restDoc);
+
         if (Array.isArray(dev)) {
             return dev.map((d) => ({ dev: parseDevice(d), html, id, ref }));
         }
@@ -193,17 +205,9 @@
             if (!docs || docs.length === 0) {
                 return [{ dev: null, html: '', id: null, ref: null }];
             }
-            const results = [];
-            for (const doc of docs) {
-                if (doc && typeof doc === 'object') {
-                    const parsed = parseSingle(doc);
-                    if (Array.isArray(parsed)) {
-                        results.push(...parsed);
-                    } else {
-                        results.push(parsed);
-                    }
-                }
-            }
+
+            const results = docs.filter((doc) => doc && typeof doc === 'object').flatMap((doc) => parseSingle(doc));
+
             return results.length > 0 ? results : [{ dev: null, html: '', id: null, ref: null }];
         } catch (e) {
             console.error('YAML parse error:', e);
@@ -215,8 +219,8 @@
         if (!g.dev) {
             return `<div class="wf-c">${g.html}</div>`;
         }
-        const d = g.dev;
-        return `<div class="wf-dev" style="--r:${d.ratio}"><div class="wf-dev-sc">${g.html}</div><div class="wf-dev-lb">${esc(d.name)}</div></div>`;
+        const { ratio, name } = g.dev;
+        return `<div class="wf-dev" style="--r:${ratio}"><div class="wf-dev-sc">${g.html}</div><div class="wf-dev-lb">${esc(name)}</div></div>`;
     }
 
     function render(groups) {
@@ -230,66 +234,63 @@
         return `<div class="wf-dev-g">${groups.map(renderGroup).join('')}</div>`;
     }
 
-    function wifuframe(src) {
-        const groups = parse(src);
-
+    function resolveRefs(groups, registry) {
         for (const g of groups) {
             if (g.id) {
-                idRegistry.set(g.id, g);
+                registry.set(g.id, g);
             }
         }
-
         for (const g of groups) {
-            if (g.ref && idRegistry.has(g.ref)) {
-                const ref = idRegistry.get(g.ref);
+            if (g.ref && registry.has(g.ref)) {
+                const ref = registry.get(g.ref);
                 g.dev = ref.dev;
                 g.html = ref.html;
             }
         }
+    }
 
+    function wifuframe(src, registry = new Map()) {
+        const groups = parse(src);
+        resolveRefs(groups, registry);
         return render(groups);
     }
 
-    window.Wifuframe = { parse, render, wifuframe, idRegistry };
-
-    document.addEventListener('DOMContentLoaded', () => {
+    function processBlocks() {
+        const registry = new Map();
         const blocks = [];
+
         for (const el of document.querySelectorAll('pre.language-wifuframe, code.language-wifuframe')) {
-            const src = el.tagName === 'CODE' ? (el.closest('pre') ? el.textContent : el.textContent) : el.textContent;
+            const src = el.textContent;
             const parsed = parse(src);
+            resolveRefs(parsed, registry);
+
             for (const g of parsed) {
                 if (g.id) {
-                    idRegistry.set(g.id, g);
+                    registry.set(g.id, g);
                 }
             }
-            blocks.push({ el, src });
+            blocks.push({ el, groups: parsed });
         }
 
-        for (const { el, src } of blocks) {
-            const groups = parse(src);
-
-            for (const g of groups) {
-                if (g.ref && idRegistry.has(g.ref)) {
-                    const ref = idRegistry.get(g.ref);
-                    g.dev = ref.dev;
-                    g.html = ref.html;
-                }
-            }
-
+        for (const { el, groups } of blocks) {
             const div = document.createElement('div');
             div.className = 'wf';
             div.innerHTML = render(groups);
 
-            if (el.tagName === 'CODE') {
-                const p = el.closest('pre');
-                if (p) {
-                    p.replaceWith(div);
-                } else {
-                    el.replaceWith(div);
-                }
+            const pre = el.closest('pre');
+            if (pre && el.tagName === 'CODE') {
+                pre.replaceWith(div);
             } else {
                 el.replaceWith(div);
             }
         }
-    });
+    }
+
+    window.Wifuframe = { parse, render, wifuframe, idRegistry: new Map() };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', processBlocks);
+    } else {
+        processBlocks();
+    }
 })();
