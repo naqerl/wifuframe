@@ -33,7 +33,9 @@
 
     function renderElement(key, val) {
         const def = ELEMENTS[key];
-        if (!def) return esc(String(val));
+        if (!def) {
+            return esc(String(val));
+        }
 
         let text = '';
         let children = '';
@@ -42,12 +44,15 @@
         let attrs = '';
 
         if (val === null || val === undefined) {
+            // no-op
         } else if (typeof val === 'string') {
             text = val;
         } else if (Array.isArray(val)) {
             children = val
                 .map((item) => {
-                    if (typeof item === 'string') return esc(item);
+                    if (typeof item === 'string') {
+                        return esc(item);
+                    }
                     if (typeof item === 'object' && item !== null) {
                         return Object.entries(item)
                             .map(([k, v]) => renderElement(k, v))
@@ -68,23 +73,30 @@
                 const { value, v, text: t, ...rest } = val;
                 text = value || v || t || '';
                 for (const [k, v] of Object.entries(rest)) {
-                    if (k === 'type') cls.push('wf-b--' + v);
-                    else if (k === 'color') cls.push('wf-t--' + v);
-                    else if (k === 'align') sty.push('text-align:' + v);
-                    else if (k === 'size') sty.push('width:' + (String(v).endsWith('%') ? v : v + 'px'));
-                    else if (k === 'alert') attrs += ' onclick="alert(\'' + escJs(v) + '\')" role="button"';
-                    else if (k === 'confirm')
-                        attrs +=
-                            ' onclick="if(confirm(\'' + escJs(v) + '\'))this.classList.add(\'active\')" role="button"';
+                    if (k === 'type') {
+                        cls.push(`wf-b--${v}`);
+                    } else if (k === 'color') {
+                        cls.push(`wf-t--${v}`);
+                    } else if (k === 'align') {
+                        sty.push(`text-align:${v}`);
+                    } else if (k === 'size') {
+                        sty.push(`width:${String(v).endsWith('%') ? v : `${v}px`}`);
+                    } else if (k === 'alert') {
+                        attrs += ` onclick="alert('${escJs(v)}')" role="button"`;
+                    } else if (k === 'confirm') {
+                        attrs += ` onclick="if(confirm('${escJs(v)}'))this.classList.add('active')" role="button"`;
+                    }
                 }
             }
         }
 
-        attrs = ' class="' + cls.join(' ') + '"' + (sty.length ? ' style="' + sty.join(';') + '"' : '') + attrs;
-        if (def.click && !attrs.includes('onclick')) attrs += ' onclick="void(0)" role="button"';
+        attrs = ` class="${cls.join(' ')}"${sty.length > 0 ? ` style="${sty.join(';')}"` : ''}${attrs}`;
+        if (def.click && !attrs.includes('onclick')) {
+            attrs += ' onclick="void(0)" role="button"';
+        }
 
         if (def.empty) {
-            return '<div' + attrs + '><input type="text" placeholder="' + esc(text) + '"/></div>';
+            return `<div${attrs}><input type="text" placeholder="${esc(text)}"/></div>`;
         }
 
         let inner = children;
@@ -92,26 +104,20 @@
             switch (key) {
                 case 'image':
                 case 'img':
-                    inner =
-                        '<div class="wf-img-ph"></div>' +
-                        (text ? '<span class="wf-img-lb">' + esc(text) + '</span>' : '');
+                    inner = `<div class="wf-img-ph"></div>${text ? `<span class="wf-img-lb">${esc(text)}</span>` : ''}`;
                     break;
                 case 'qr':
-                    inner =
-                        '<div class="wf-qr-ph"></div>' +
-                        (text ? '<span class="wf-qr-lb">' + esc(text) + '</span>' : '');
+                    inner = `<div class="wf-qr-ph"></div>${text ? `<span class="wf-qr-lb">${esc(text)}</span>` : ''}`;
                     break;
                 case 'barcode':
-                    inner =
-                        '<div class="wf-bc-ph"></div>' +
-                        (text ? '<span class="wf-bc-lb">' + esc(text) + '</span>' : '');
+                    inner = `<div class="wf-bc-ph"></div>${text ? `<span class="wf-bc-lb">${esc(text)}</span>` : ''}`;
                     break;
                 case 'avatar':
                     inner = text || '';
                     break;
                 case 'dropdown':
                 case 'select':
-                    inner = '<span>' + esc(text || 'Select...') + '</span><span>▼</span>';
+                    inner = `<span>${esc(text || 'Select...')}</span><span>▼</span>`;
                     break;
                 case 'icon':
                     inner = text || '◆';
@@ -124,17 +130,25 @@
             }
         }
 
-        return '<' + def.tag + attrs + '>' + inner + '</' + def.tag + '>';
+        return `<${def.tag}${attrs}>${inner}</${def.tag}>`;
     }
 
     function walk(node) {
-        if (node === null || node === undefined) return '';
-        if (typeof node === 'string') return esc(node);
-        if (typeof node !== 'object') return String(node);
+        if (node === null || node === undefined) {
+            return '';
+        }
+        if (typeof node === 'string') {
+            return esc(node);
+        }
+        if (typeof node !== 'object') {
+            return String(node);
+        }
 
         let html = '';
         for (const [key, val] of Object.entries(node)) {
-            if (key === 'device' || key === 'id' || key === 'ref') continue;
+            if (key === 'device' || key === 'id' || key === 'ref') {
+                continue;
+            }
             html += renderElement(key, val);
         }
         return html;
@@ -154,17 +168,20 @@
     }
 
     function parseSingle(doc) {
-        if (!doc || typeof doc !== 'object') return [{ dev: null, html: '', id: null, ref: null }];
+        if (!doc || typeof doc !== 'object') {
+            return [{ dev: null, html: '', id: null, ref: null }];
+        }
         const dev = doc.device;
         const id = doc.id;
         const ref = doc.ref;
-        delete doc.device;
-        delete doc.id;
-        delete doc.ref;
+        doc.device = undefined;
+        doc.id = undefined;
+        doc.ref = undefined;
         const html = walk(doc);
         if (Array.isArray(dev)) {
             return dev.map((d) => ({ dev: parseDevice(d), html, id, ref }));
-        } else if (dev) {
+        }
+        if (dev) {
             return [{ dev: parseDevice(dev), html, id, ref }];
         }
         return [{ dev: null, html, id, ref }];
@@ -173,7 +190,9 @@
     function parse(src) {
         try {
             const docs = parseDocs(src);
-            if (!docs || !docs.length) return [{ dev: null, html: '', id: null, ref: null }];
+            if (!docs || docs.length === 0) {
+                return [{ dev: null, html: '', id: null, ref: null }];
+            }
             const results = [];
             for (const doc of docs) {
                 if (doc && typeof doc === 'object') {
@@ -185,32 +204,30 @@
                     }
                 }
             }
-            return results.length ? results : [{ dev: null, html: '', id: null, ref: null }];
+            return results.length > 0 ? results : [{ dev: null, html: '', id: null, ref: null }];
         } catch (e) {
             console.error('YAML parse error:', e);
-            return [{ dev: null, html: '<div class="wf-err">' + esc(e.message) + '</div>', id: null, ref: null }];
+            return [{ dev: null, html: `<div class="wf-err">${esc(e.message)}</div>`, id: null, ref: null }];
         }
     }
 
     function renderGroup(g) {
-        if (!g.dev) return '<div class="wf-c">' + g.html + '</div>';
+        if (!g.dev) {
+            return `<div class="wf-c">${g.html}</div>`;
+        }
         const d = g.dev;
-        return (
-            '<div class="wf-dev" style="--r:' +
-            d.ratio +
-            '"><div class="wf-dev-sc">' +
-            g.html +
-            '</div><div class="wf-dev-lb">' +
-            esc(d.name) +
-            '</div></div>'
-        );
+        return `<div class="wf-dev" style="--r:${d.ratio}"><div class="wf-dev-sc">${g.html}</div><div class="wf-dev-lb">${esc(d.name)}</div></div>`;
     }
 
     function render(groups) {
-        if (!groups || !groups.length) return '';
+        if (!groups || groups.length === 0) {
+            return '';
+        }
         const hasDev = groups.some((g) => g.dev);
-        if (!hasDev) return renderGroup(groups[0]);
-        return '<div class="wf-dev-g">' + groups.map(renderGroup).join('') + '</div>';
+        if (!hasDev) {
+            return renderGroup(groups[0]);
+        }
+        return `<div class="wf-dev-g">${groups.map(renderGroup).join('')}</div>`;
     }
 
     function wifuframe(src) {
@@ -237,14 +254,16 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         const blocks = [];
-        document.querySelectorAll('pre.language-wifuframe, code.language-wifuframe').forEach((el) => {
+        for (const el of document.querySelectorAll('pre.language-wifuframe, code.language-wifuframe')) {
             const src = el.tagName === 'CODE' ? (el.closest('pre') ? el.textContent : el.textContent) : el.textContent;
             const parsed = parse(src);
             for (const g of parsed) {
-                if (g.id) idRegistry.set(g.id, g);
+                if (g.id) {
+                    idRegistry.set(g.id, g);
+                }
             }
             blocks.push({ el, src });
-        });
+        }
 
         for (const { el, src } of blocks) {
             const groups = parse(src);
@@ -263,8 +282,11 @@
 
             if (el.tagName === 'CODE') {
                 const p = el.closest('pre');
-                if (p) p.replaceWith(div);
-                else el.replaceWith(div);
+                if (p) {
+                    p.replaceWith(div);
+                } else {
+                    el.replaceWith(div);
+                }
             } else {
                 el.replaceWith(div);
             }
