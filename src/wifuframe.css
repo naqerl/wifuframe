@@ -147,6 +147,14 @@
     }
 }
 
+.wf-page {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75em;
+    padding: 0.5em 0;
+    font-size: 1em;
+}
+
 .wf-block {
     display: flex;
     flex-direction: column;
@@ -155,12 +163,14 @@
     background: #151515;
     border: 1px solid #333;
     border-radius: 0.5em;
+    font-size: 0.95em;
 }
 
 .wf-row {
     display: flex;
     gap: 0.75em;
     align-items: start;
+    font-size: 0.95em;
 }
 
 .wf-col {
@@ -168,13 +178,7 @@
     flex-direction: column;
     flex: 1;
     gap: 0.5em;
-}
-
-.wf-page {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75em;
-    padding: 0.5em 0;
+    font-size: 0.9em;
 }
 
 .wf-spacer {
