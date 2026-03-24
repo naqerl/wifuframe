@@ -243,11 +243,11 @@
         return render(groups);
     }
 
-    function processBlocks() {
+    function processBlocks(selector = 'pre.language-wifuframe, code.language-wifuframe') {
         const registry = new Map();
         const blocks = [];
 
-        for (const el of document.querySelectorAll('pre.language-wifuframe, code.language-wifuframe')) {
+        for (const el of document.querySelectorAll(selector)) {
             const src = el.textContent;
             const parsed = parse(src);
             resolveRefs(parsed, registry);
@@ -274,11 +274,15 @@
         }
     }
 
-    window.Wifuframe = { parse, render, wifuframe, idRegistry: new Map() };
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', processBlocks);
-    } else {
-        processBlocks();
+    function init(selector) {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => processBlocks(selector));
+        } else {
+            processBlocks(selector);
+        }
     }
+
+    window.Wifuframe = { parse, render, wifuframe, init, idRegistry: new Map() };
+
+    init();
 })();
