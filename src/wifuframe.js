@@ -119,15 +119,16 @@
         } else if (Array.isArray(val)) {
             children = renderChildren(val);
         } else if (typeof val === 'object') {
-            const hasElementChild = Object.keys(val).some((k) => ELEMENTS[k]);
+            const { value, v, text: t, ...rest } = val;
+            text = value || v || t || '';
+
+            const hasElementChild = Object.keys(rest).some((k) => ELEMENTS[k]);
 
             if (hasElementChild) {
-                children = Object.entries(val)
+                children = Object.entries(rest)
                     .map(([k, v]) => renderElement(k, v))
                     .join('');
             } else {
-                const { value, v, text: t, ...rest } = val;
-                text = value || v || t || '';
                 processProps(rest, cls, sty, attrs);
             }
         }
