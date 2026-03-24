@@ -5,16 +5,16 @@
     };
 
     const ELEMENTS = {
-        title: { tag: 'h1', cls: 'wf-ti' },
-        text: { tag: 'span', cls: 'wf-t' },
-        button: { tag: 'button', cls: 'wf-b', click: true },
-        image: { tag: 'div', cls: 'wf-img' },
-        input: { tag: 'input', cls: 'wf-in', empty: true },
-        block: { tag: 'div', cls: 'wf-card' },
-        row: { tag: 'div', cls: 'wf-row' },
-        col: { tag: 'div', cls: 'wf-col' },
-        page: { tag: 'div', cls: 'wf-page' },
-        spacer: { tag: 'div', cls: 'wf-sp' },
+        title: { tag: 'h1' },
+        text: { tag: 'span' },
+        button: { tag: 'button', click: true },
+        image: { tag: 'div' },
+        input: { tag: 'input', empty: true },
+        block: { tag: 'div' },
+        row: { tag: 'div' },
+        col: { tag: 'div' },
+        page: { tag: 'div' },
+        spacer: { tag: 'div' },
     };
 
     const HTML_ESCAPE_MAP = {
@@ -64,10 +64,10 @@
         for (const [k, v] of Object.entries(rest)) {
             switch (k) {
                 case 'type':
-                    cls.push(`wf-b--${v}`);
+                    cls.push(`wf-button--${v}`);
                     break;
                 case 'color':
-                    cls.push(`wf-t--${v}`);
+                    cls.push(`wf-text--${v}`);
                     break;
                 case 'align':
                     sty.push(`text-align:${v}`);
@@ -76,10 +76,10 @@
                     sty.push(`width:${String(v).endsWith('%') ? v : `${v}px`}`);
                     break;
                 case 'alert':
-                    attrs.push(` onclick="alert('${escJs(v)}')" role="button"`);
+                    attrs.push(` onclick="alert(\'${escJs(v)}\')" role="button"`);
                     break;
                 case 'confirm':
-                    attrs.push(` onclick="if(confirm('${escJs(v)}'))this.classList.add('active')" role="button"`);
+                    attrs.push(` onclick="if(confirm(\'${escJs(v)}\'))this.classList.add(\'active\')" role="button"`);
                     break;
                 default:
                     break;
@@ -90,8 +90,8 @@
 
     function getInner(key, text) {
         if (key === 'image') {
-            const placeholder = '<div class="wf-img-ph"></div>';
-            const label = text ? `<span class="wf-img-lb">${esc(text)}</span>` : '';
+            const placeholder = '<div></div>';
+            const label = text ? `<span>${esc(text)}</span>` : '';
             return placeholder + label;
         }
         if (key === 'spacer') {
@@ -108,7 +108,7 @@
 
         let text = '';
         let children = '';
-        const cls = [def.cls];
+        const cls = [`wf-${key}`];
         const sty = [];
         const attrs = [];
 
