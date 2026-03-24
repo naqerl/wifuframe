@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wifuframe Showcase</title>
+    <link rel="stylesheet" href="src/wifuframe.css">
+    <script src="https://cdn.jsdelivr.net/npm/js-yaml@4/dist/js-yaml.min.js"></script>
+    <script src="src/wifuframe.js"></script>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .example {
+            margin-bottom: 4rem;
+        }
+        .example h2 {
+            color: #888;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #333;
+        }
+        .example-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .yaml-source {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        .yaml-source pre {
+            margin: 0;
+            color: #7fb77f;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        @media (max-width: 768px) {
+            .example-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Wifuframe Showcase</h1>
+
+    <div class="example">
+        <h2>Basic Elements</h2>
+        <div class="example-grid">
+            <div class="yaml-source">
+                <pre>title: Hello World
+text: This is a simple text element
+button: Click Me</pre>
+            </div>
+            <pre class="language-wifuframe">title: Hello World
+text: This is a simple text element
+button: Click Me</pre>
+        </div>
+    </div>
+
+    <div class="example">
+        <h2>Button Variants</h2>
+        <div class="example-grid">
+            <div class="yaml-source">
+                <pre>button:
+  text: Primary
+  type: primary
+button:
+  text: Danger
+  type: danger
+button:
+  text: Success
+  type: success</pre>
+            </div>
+            <pre class="language-wifuframe">button:
+  text: Primary
+  type: primary
+button:
+  text: Danger
+  type: danger
+button:
+  text: Success
+  type: success</pre>
+        </div>
+    </div>
+
+    <div class="example">
+        <h2>Text Colors</h2>
+        <div class="example-grid">
+            <div class="yaml-source">
+                <pre>text:
+  value: Secondary text
+  color: secondary
+text:
+  value: Success message
+  color: success
+text:
+  value: Error message
+  color: danger
+text:
+  value: Primary info
+  color: primary</pre>
+            </div>
+            <pre class="language-wifuframe">text:
+  value: Secondary text
+  color: secondary
+text:
+  value: Success message
+  color: success
+text:
+  value: Error message
+  color: danger
+text:
+  value: Primary info
+  color: primary</pre>
+        </div>
+    </div>
+
+    <div class="example">
+        <h2>Layout - Row & Columns</h2>
+        <div class="example-grid">
+            <div class="yaml-source">
+                <pre>row:
+  - col:
+      title: Column 1
+      text: First column content
+  - col:
+      title: Column 2
+      text: Second column content
+  - col:
+      title: Column 3
+      text: Third column content</pre>
+            </div>
+            <pre class="language-wifuframe">row:
+  - col:
+      title: Column 1
+      text: First column content
+  - col:
+      title: Column 2
+      text: Second column content
+  - col:
+      title: Column 3
+      text: Third column content</pre>
+        </div>
+    </div>
+
+    <div class="example">
+        <h2>Card Block</h2>
+        <div class="example-grid">
+            <div class="yaml-source">
+                <pre>block:
+  title: Card Title
+  text: Card description text
+  row:
+    - button:
+        text: Cancel
+        type: secondary
+    - spacer
+    - button:
+        text: Save
+        type: primary</pre>
+            </div>
+            <pre class="language-wifuframe">block:
+  title: Card Title
+  text: Card description text
+  row:
+    - button:
+        text: Cancel
+        type: secondary
+    - spacer
+    - button:
+        text: Save
+        type: primary</pre>
+        </div>
+    </div>
+
+    <div class="example">
+        <h2>Form Elements</h2>
+        <div class="example-grid">
+            <div class="yaml-source">
+                <pre>title: Login Form
+text: Please enter your credentials
+input:
+  value: Username
+input:
+  value: Password
+row:
+  - button:
+      text: Login
+      type: primary
+  - button:
+      text: Forgot Password</pre>
+            </div>
+            <pre class="language-wifuframe">title: Login Form
+text: Please enter your credentials
+input:
+  value: Username
+input:
+  value: Password
+row:
+  - button:
+      text: Login
+      type: primary
+  - button:
+      text: Forgot Password</pre>
+        </div>
+    </div>
+
+    <div class="example">
+        <h2>Image Placeholder</h2>
+        <div class="example-grid">
+            <div class="yaml-source">
+                <pre>title: Gallery
+image: Product Photo
+image: Another Image
+image: Third Image</pre>
+            </div>
+            <pre class="language-wifuframe">title: Gallery
+image: Product Photo
+image: Another Image
+image: Third Image</pre>
+        </div>
+    </div>
+
+    <div class="example">
+        <h2>Device Preview - Mobile</h2>
+        <div class="example-grid">
+            <div class="yaml-source">
+                <pre>---
+device: mobile
+title: Mobile App
+row:
+  - button: Home
+  - button: Profile
+  - button: Settings
+text: Welcome to the mobile app
+image: Screenshot
+button:
+  text: Get Started
+  type: primary</pre>
+            </div>
+            <pre class="language-wifuframe">---
+device: mobile
+title: Mobile App
+row:
+  - button: Home
+  - button: Profile
+  - button: Settings
+text: Welcome to the mobile app
+image: Screenshot
+button:
+  text: Get Started
+  type: primary</pre>
+        </div>
+    </div>
+
+    <div class="example">
+        <h2>Device Preview - Desktop</h2>
+        <div class="example-grid">
+            <div class="yaml-source">
+                <pre>---
+device: desktop
+page:
+  title: Desktop Dashboard
+  row:
+    - block:
+        title: Stats
+        text: 1,234 users
+    - block:
+        title: Revenue
+        text: $12,345
+    - block:
+        title: Growth
+        text: +23%</pre>
+            </div>
+            <pre class="language-wifuframe">---
+device: desktop
+title: Desktop Dashboard
+row:
+  - block:
+      title: Stats
+      text: 1,234 users
+  - block:
+      title: Revenue
+      text: $12,345
+  - block:
+      title: Growth
+      text: +23%</pre>
+        </div>
+    </div>
+
+    <div class="example">
+        <h2>Interactive Buttons</h2>
+        <div class="example-grid">
+            <div class="yaml-source">
+                <pre>title: Interactive Demo
+button:
+  text: Show Alert
+  alert: Hello from Wifuframe!
+button:
+  text: Confirm Action
+  confirm: Are you sure you want to proceed?</pre>
+            </div>
+            <pre class="language-wifuframe">title: Interactive Demo
+button:
+  text: Show Alert
+  alert: Hello from Wifuframe!
+button:
+  text: Confirm Action
+  confirm: Are you sure you want to proceed?</pre>
+        </div>
+    </div>
+
+    <div class="example">
+        <h2>Multiple Devices</h2>
+        <div class="example-grid">
+            <div class="yaml-source">
+                <pre>---
+device:
+  - mobile
+  - desktop
+title: Responsive Design
+row:
+  - col:
+      image: Feature 1
+      text: First feature
+  - col:
+      image: Feature 2
+      text: Second feature</pre>
+            </div>
+            <pre class="language-wifuframe">---
+device:
+  - mobile
+  - desktop
+title: Responsive Design
+row:
+  - col:
+      image: Feature 1
+      text: First feature
+  - col:
+      image: Feature 2
+      text: Second feature</pre>
+        </div>
+    </div>
+
+</body>
+</html>
