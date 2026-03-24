@@ -93,7 +93,7 @@
           - button:
               text: Cancel
               type: secondary
-          - spacer
+          - spacer:
           - button:
               text: Save
               type: primary`
@@ -195,7 +195,7 @@ page:
             const container = document.createElement('div');
             container.className = 'example-grid grid gap-6';
             container.style.gridTemplateColumns = '1fr 2fr';
-            
+
             const editorDiv = document.createElement('div');
             editorDiv.className = 'editor-container';
             editorDiv.style.height = '300px';
@@ -205,10 +205,10 @@ page:
             previewDiv.className = 'w-2/3 mx-auto';
             previewDiv.innerHTML = `<div class="wf">${renderExample(index, example.code)}</div>`;
             previewDiv.id = `preview-${index}`;
-            
+
             container.appendChild(editorDiv);
             container.appendChild(previewDiv);
-            
+
             return container;
         }
 
@@ -238,7 +238,7 @@ page:
                 examples.forEach((example, index) => {
                     const container = createExampleElement(example, index);
                     document.getElementById('examples').appendChild(container);
-                    
+
                     const editor = monaco.editor.create(document.getElementById(`editor-${index}`), {
                         value: example.code,
                         language: 'yaml',
@@ -256,9 +256,9 @@ page:
                         hideCursorInOverviewRuler: true,
                         overviewRulerBorder: false
                     });
-                    
+
                     editors.push(editor);
-                    
+
                     let debounceTimer;
                     editor.onDidChangeModelContent(() => {
                         clearTimeout(debounceTimer);
