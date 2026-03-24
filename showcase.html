@@ -8,19 +8,12 @@
     <link rel="stylesheet" href="src/wifuframe.css">
     <script src="https://cdn.jsdelivr.net/npm/js-yaml@4/dist/js-yaml.min.js"></script>
     <script src="src/wifuframe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.min.js"></script>
     <style>
-        .yaml-source {
-            background: #0a0a0a;
+        .editor-container {
             border: 1px solid #333;
             border-radius: 0.5rem;
-            padding: 1rem;
-            overflow-x: auto;
-        }
-        .yaml-source pre {
-            margin: 0;
-            color: #7fb77f;
-            font-size: 0.75rem;
-            line-height: 1.5;
+            overflow: hidden;
         }
         @media (max-width: 1024px) {
             .example-grid {
@@ -33,327 +26,250 @@
     <div class="max-w-7xl mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold text-center mb-12">Wifuframe Showcase</h1>
 
-        <div class="space-y-8">
-            <!-- Basic Elements -->
-            <div class="example-grid grid grid-cols-2 gap-6">
-                <div class="yaml-source">
-                    <pre>page:
-  - title: Hello World
-  - text: This is a simple text element
-  - button: Click Me</pre>
-                </div>
-                <div class="w-1/2 mx-auto">
-                    <pre class="language-wifuframe">page:
-  - title: Hello World
-  - text: This is a simple text element
-  - button: Click Me</pre>
-                </div>
-            </div>
-
-            <!-- Button Variants -->
-            <div class="example-grid grid grid-cols-2 gap-6">
-                <div class="yaml-source">
-                    <pre>page:
-  - button:
-      text: Primary
-      type: primary
-  - button:
-      text: Danger
-      type: danger
-  - button:
-      text: Success
-      type: success</pre>
-                </div>
-                <div class="w-1/2 mx-auto">
-                    <pre class="language-wifuframe">page:
-  - button:
-      text: Primary
-      type: primary
-  - button:
-      text: Danger
-      type: danger
-  - button:
-      text: Success
-      type: success</pre>
-                </div>
-            </div>
-
-            <!-- Text Colors -->
-            <div class="example-grid grid grid-cols-2 gap-6">
-                <div class="yaml-source">
-                    <pre>page:
-  - text:
-      value: Secondary text
-      color: secondary
-  - text:
-      value: Success message
-      color: success
-  - text:
-      value: Error message
-      color: danger
-  - text:
-      value: Primary info
-      color: primary</pre>
-                </div>
-                <div class="w-1/2 mx-auto">
-                    <pre class="language-wifuframe">page:
-  - text:
-      value: Secondary text
-      color: secondary
-  - text:
-      value: Success message
-      color: success
-  - text:
-      value: Error message
-      color: danger
-  - text:
-      value: Primary info
-      color: primary</pre>
-                </div>
-            </div>
-
-            <!-- Layout - Row & Columns -->
-            <div class="example-grid grid grid-cols-2 gap-6">
-                <div class="yaml-source">
-                    <pre>page:
-  - row:
-      - col:
-          - title: Column 1
-          - text: First column content
-      - col:
-          - title: Column 2
-          - text: Second column content
-      - col:
-          - title: Column 3
-          - text: Third column content</pre>
-                </div>
-                <div class="w-1/2 mx-auto">
-                    <pre class="language-wifuframe">page:
-  - row:
-      - col:
-          - title: Column 1
-          - text: First column content
-      - col:
-          - title: Column 2
-          - text: Second column content
-      - col:
-          - title: Column 3
-          - text: Third column content</pre>
-                </div>
-            </div>
-
-            <!-- Card Block -->
-            <div class="example-grid grid grid-cols-2 gap-6">
-                <div class="yaml-source">
-                    <pre>page:
-  - block:
-      - title: Card Title
-      - text: Card description text
-      - row:
-          - button:
-              text: Cancel
-              type: secondary
-          - spacer
-          - button:
-              text: Save
-              type: primary</pre>
-                </div>
-                <div class="w-1/2 mx-auto">
-                    <pre class="language-wifuframe">page:
-  - block:
-      - title: Card Title
-      - text: Card description text
-      - row:
-          - button:
-              text: Cancel
-              type: secondary
-          - spacer
-          - button:
-              text: Save
-              type: primary</pre>
-                </div>
-            </div>
-
-            <!-- Form Elements -->
-            <div class="example-grid grid grid-cols-2 gap-6">
-                <div class="yaml-source">
-                    <pre>page:
-  - title: Login Form
-  - text: Please enter your credentials
-  - input:
-      value: Username
-  - input:
-      value: Password
-  - row:
-      - button:
-          text: Login
-          type: primary
-      - button:
-          text: Forgot Password</pre>
-                </div>
-                <div class="w-1/2 mx-auto">
-                    <pre class="language-wifuframe">page:
-  - title: Login Form
-  - text: Please enter your credentials
-  - input:
-      value: Username
-  - input:
-      value: Password
-  - row:
-      - button:
-          text: Login
-          type: primary
-      - button:
-          text: Forgot Password</pre>
-                </div>
-            </div>
-
-            <!-- Image Placeholder -->
-            <div class="example-grid grid grid-cols-2 gap-6">
-                <div class="yaml-source">
-                    <pre>page:
-  - title: Gallery
-  - image: Product Photo
-  - image: Another Image
-  - image: Third Image</pre>
-                </div>
-                <div class="w-1/2 mx-auto">
-                    <pre class="language-wifuframe">page:
-  - title: Gallery
-  - image: Product Photo
-  - image: Another Image
-  - image: Third Image</pre>
-                </div>
-            </div>
-
-            <!-- Device Preview - Mobile -->
-            <div class="example-grid grid grid-cols-2 gap-6">
-                <div class="yaml-source">
-                    <pre>---
-device: mobile
-page:
-  - title: Mobile App
-  - row:
-      - button: Home
-      - button: Profile
-      - button: Settings
-  - text: Welcome to the mobile app
-  - image: Screenshot
-  - button:
-      text: Get Started
-      type: primary</pre>
-                </div>
-                <div class="w-1/2 mx-auto">
-                    <pre class="language-wifuframe">---
-device: mobile
-page:
-  - title: Mobile App
-  - row:
-      - button: Home
-      - button: Profile
-      - button: Settings
-  - text: Welcome to the mobile app
-  - image: Screenshot
-  - button:
-      text: Get Started
-      type: primary</pre>
-                </div>
-            </div>
-
-            <!-- Device Preview - Desktop -->
-            <div class="example-grid grid grid-cols-2 gap-6">
-                <div class="yaml-source">
-                    <pre>---
-device: desktop
-page:
-  - title: Desktop Dashboard
-  - row:
-      - block:
-          - title: Stats
-          - text: 1,234 users
-      - block:
-          - title: Revenue
-          - text: $12,345
-      - block:
-          - title: Growth
-          - text: +23%</pre>
-                </div>
-                <div class="w-1/2 mx-auto">
-                    <pre class="language-wifuframe">---
-device: desktop
-page:
-  - title: Desktop Dashboard
-  - row:
-      - block:
-          - title: Stats
-          - text: 1,234 users
-      - block:
-          - title: Revenue
-          - text: $12,345
-      - block:
-          - title: Growth
-          - text: +23%</pre>
-                </div>
-            </div>
-
-            <!-- Interactive Buttons -->
-            <div class="example-grid grid grid-cols-2 gap-6">
-                <div class="yaml-source">
-                    <pre>page:
-  - title: Interactive Demo
-  - button:
-      text: Show Alert
-      alert: Hello from Wifuframe!
-  - button:
-      text: Confirm Action
-      confirm: Are you sure you want to proceed?</pre>
-                </div>
-                <div class="w-1/2 mx-auto">
-                    <pre class="language-wifuframe">page:
-  - title: Interactive Demo
-  - button:
-      text: Show Alert
-      alert: Hello from Wifuframe!
-  - button:
-      text: Confirm Action
-      confirm: Are you sure you want to proceed?</pre>
-                </div>
-            </div>
-
-            <!-- Multiple Devices -->
-            <div class="example-grid grid grid-cols-2 gap-6">
-                <div class="yaml-source">
-                    <pre>---
-device:
-  - mobile
-  - desktop
-page:
-  - title: Responsive Design
-  - row:
-      - col:
-          - image: Feature 1
-          - text: First feature
-      - col:
-          - image: Feature 2
-          - text: Second feature</pre>
-                </div>
-                <div class="w-1/2 mx-auto">
-                    <pre class="language-wifuframe">---
-device:
-  - mobile
-  - desktop
-page:
-  - title: Responsive Design
-  - row:
-      - col:
-          - image: Feature 1
-          - text: First feature
-      - col:
-          - image: Feature 2
-          - text: Second feature</pre>
-                </div>
-            </div>
+        <div class="space-y-8" id="examples">
+            <!-- Examples will be generated here -->
         </div>
     </div>
+
+    <script>
+        const examples = [
+            {
+                name: "Basic Elements",
+                code: `page:
+  - title: Hello World
+  - text: This is a simple text element
+  - button: Click Me`
+            },
+            {
+                name: "Button Variants",
+                code: `page:
+  - button:
+      text: Primary
+      type: primary
+  - button:
+      text: Danger
+      type: danger
+  - button:
+      text: Success
+      type: success`
+            },
+            {
+                name: "Text Colors",
+                code: `page:
+  - text:
+      value: Secondary text
+      color: secondary
+  - text:
+      value: Success message
+      color: success
+  - text:
+      value: Error message
+      color: danger
+  - text:
+      value: Primary info
+      color: primary`
+            },
+            {
+                name: "Layout - Row & Columns",
+                code: `page:
+  - row:
+      - col:
+          - title: Column 1
+          - text: First column content
+      - col:
+          - title: Column 2
+          - text: Second column content
+      - col:
+          - title: Column 3
+          - text: Third column content`
+            },
+            {
+                name: "Card Block",
+                code: `page:
+  - block:
+      - title: Card Title
+      - text: Card description text
+      - row:
+          - button:
+              text: Cancel
+              type: secondary
+          - spacer
+          - button:
+              text: Save
+              type: primary`
+            },
+            {
+                name: "Form Elements",
+                code: `page:
+  - title: Login Form
+  - text: Please enter your credentials
+  - input:
+      value: Username
+  - input:
+      value: Password
+  - row:
+      - button:
+          text: Login
+          type: primary
+      - button:
+          text: Forgot Password`
+            },
+            {
+                name: "Image Placeholder",
+                code: `page:
+  - title: Gallery
+  - image: Product Photo
+  - image: Another Image
+  - image: Third Image`
+            },
+            {
+                name: "Device Preview - Mobile",
+                code: `---
+device: mobile
+page:
+  - title: Mobile App
+  - row:
+      - button: Home
+      - button: Profile
+      - button: Settings
+  - text: Welcome to the mobile app
+  - image: Screenshot
+  - button:
+      text: Get Started
+      type: primary`
+            },
+            {
+                name: "Device Preview - Desktop",
+                code: `---
+device: desktop
+page:
+  - title: Desktop Dashboard
+  - row:
+      - block:
+          - title: Stats
+          - text: 1,234 users
+      - block:
+          - title: Revenue
+          - text: $12,345
+      - block:
+          - title: Growth
+          - text: +23%`
+            },
+            {
+                name: "Interactive Buttons",
+                code: `page:
+  - title: Interactive Demo
+  - button:
+      text: Show Alert
+      alert: Hello from Wifuframe!
+  - button:
+      text: Confirm Action
+      confirm: Are you sure you want to proceed?`
+            },
+            {
+                name: "Multiple Devices",
+                code: `---
+device:
+  - mobile
+  - desktop
+page:
+  - title: Responsive Design
+  - row:
+      - col:
+          - image: Feature 1
+          - text: First feature
+      - col:
+          - image: Feature 2
+          - text: Second feature`
+            }
+        ];
+
+        const editors = [];
+
+        function renderExample(index, code) {
+            const groups = Wifuframe.parse(code);
+            return Wifuframe.render(groups);
+        }
+
+        function createExampleElement(example, index) {
+            const container = document.createElement('div');
+            container.className = 'example-grid grid grid-cols-2 gap-6';
+            
+            const editorDiv = document.createElement('div');
+            editorDiv.className = 'editor-container';
+            editorDiv.style.height = '300px';
+            editorDiv.id = `editor-${index}`;
+            
+            const previewDiv = document.createElement('div');
+            previewDiv.className = 'w-1/2 mx-auto';
+            previewDiv.innerHTML = `<div class="wf">${renderExample(index, example.code)}</div>`;
+            previewDiv.id = `preview-${index}`;
+            
+            container.appendChild(editorDiv);
+            container.appendChild(previewDiv);
+            
+            return container;
+        }
+
+        function initEditors() {
+            require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs' } });
+            
+            require(['vs/editor/editor.main'], function() {
+                monaco.editor.defineTheme('wifuframeDark', {
+                    base: 'vs-dark',
+                    inherit: true,
+                    rules: [
+                        { token: 'keyword', foreground: '7FB77F' },
+                        { token: 'string', foreground: 'CE9178' },
+                        { token: 'number', foreground: 'B5CEA8' },
+                        { token: 'comment', foreground: '6A9955' }
+                    ],
+                    colors: {
+                        'editor.background': '#0A0A0A',
+                        'editor.lineHighlightBackground': '#1A1A1A',
+                        'editorLineNumber.foreground': '#666666',
+                        'editor.selectionBackground': '#264F78'
+                    }
+                });
+
+                examples.forEach((example, index) => {
+                    const container = createExampleElement(example, index);
+                    document.getElementById('examples').appendChild(container);
+                    
+                    const editor = monaco.editor.create(document.getElementById(`editor-${index}`), {
+                        value: example.code,
+                        language: 'yaml',
+                        theme: 'wifuframeDark',
+                        automaticLayout: true,
+                        minimap: { enabled: false },
+                        scrollBeyondLastLine: false,
+                        fontSize: 13,
+                        lineNumbers: 'on',
+                        roundedSelection: false,
+                        padding: { top: 16, bottom: 16 },
+                        wordWrap: 'on'
+                    });
+                    
+                    editors.push(editor);
+                    
+                    let debounceTimer;
+                    editor.onDidChangeModelContent(() => {
+                        clearTimeout(debounceTimer);
+                        debounceTimer = setTimeout(() => {
+                            const newCode = editor.getValue();
+                            try {
+                                const html = renderExample(index, newCode);
+                                document.getElementById(`preview-${index}`).innerHTML = `<div class="wf">${html}</div>`;
+                            } catch (e) {
+                                console.error('Parse error:', e);
+                            }
+                        }, 300);
+                    });
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', initEditors);
+    </script>
 </body>
 </html>
