@@ -19,8 +19,8 @@
     font-size: clamp(.625rem, 1.5vh, .875rem);
 
     > .wf-dev-sc {
-        height: 60vh;
-        max-height: 600px;
+        width: 100%;
+        max-width: 375px;
         aspect-ratio: var(--r, 9 / 16);
         background: #0a0a0a;
         border: .4rem solid #1a1a1a;
@@ -185,8 +185,7 @@
     }
 
     .wf-dev > .wf-dev-sc {
-        height: 50vh;
-        max-height: 400px;
+        max-width: 280px;
     }
 
     .wf-row {

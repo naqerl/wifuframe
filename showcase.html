@@ -4,39 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wifuframe Showcase</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="src/wifuframe.css">
     <script src="https://cdn.jsdelivr.net/npm/js-yaml@4/dist/js-yaml.min.js"></script>
     <script src="src/wifuframe.js"></script>
     <style>
-        body {
-            font-family: system-ui, -apple-system, sans-serif;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-            background: #1a1a1a;
-            color: #e0e0e0;
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        .example {
-            margin-bottom: 4rem;
-        }
-        .example h2 {
-            color: #888;
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid #333;
-        }
-        .example-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
         .yaml-source {
             background: #0a0a0a;
             border: 1px solid #333;
@@ -47,40 +19,41 @@
         .yaml-source pre {
             margin: 0;
             color: #7fb77f;
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             line-height: 1.5;
         }
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .example-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr !important;
             }
         }
     </style>
 </head>
-<body>
-    <h1>Wifuframe Showcase</h1>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-center mb-12">Wifuframe Showcase</h1>
 
-    <div class="example">
-        <h2>Basic Elements</h2>
-        <div class="example-grid">
-            <div class="yaml-source">
-                <pre>page:
+        <div class="space-y-8">
+            <!-- Basic Elements -->
+            <div class="example-grid grid grid-cols-2 gap-6">
+                <div class="yaml-source">
+                    <pre>page:
   - title: Hello World
   - text: This is a simple text element
   - button: Click Me</pre>
+                </div>
+                <div class="w-1/2 mx-auto">
+                    <pre class="language-wifuframe">page:
+  - title: Hello World
+  - text: This is a simple text element
+  - button: Click Me</pre>
+                </div>
             </div>
-            <pre class="language-wifuframe">page:
-  - title: Hello World
-  - text: This is a simple text element
-  - button: Click Me</pre>
-        </div>
-    </div>
 
-    <div class="example">
-        <h2>Button Variants</h2>
-        <div class="example-grid">
-            <div class="yaml-source">
-                <pre>page:
+            <!-- Button Variants -->
+            <div class="example-grid grid grid-cols-2 gap-6">
+                <div class="yaml-source">
+                    <pre>page:
   - button:
       text: Primary
       type: primary
@@ -90,8 +63,9 @@
   - button:
       text: Success
       type: success</pre>
-            </div>
-            <pre class="language-wifuframe">page:
+                </div>
+                <div class="w-1/2 mx-auto">
+                    <pre class="language-wifuframe">page:
   - button:
       text: Primary
       type: primary
@@ -101,14 +75,13 @@
   - button:
       text: Success
       type: success</pre>
-        </div>
-    </div>
+                </div>
+            </div>
 
-    <div class="example">
-        <h2>Text Colors</h2>
-        <div class="example-grid">
-            <div class="yaml-source">
-                <pre>page:
+            <!-- Text Colors -->
+            <div class="example-grid grid grid-cols-2 gap-6">
+                <div class="yaml-source">
+                    <pre>page:
   - text:
       value: Secondary text
       color: secondary
@@ -121,8 +94,9 @@
   - text:
       value: Primary info
       color: primary</pre>
-            </div>
-            <pre class="language-wifuframe">page:
+                </div>
+                <div class="w-1/2 mx-auto">
+                    <pre class="language-wifuframe">page:
   - text:
       value: Secondary text
       color: secondary
@@ -135,26 +109,13 @@
   - text:
       value: Primary info
       color: primary</pre>
-        </div>
-    </div>
-
-    <div class="example">
-        <h2>Layout - Row & Columns</h2>
-        <div class="example-grid">
-            <div class="yaml-source">
-                <pre>page:
-  - row:
-      - col:
-          - title: Column 1
-          - text: First column content
-      - col:
-          - title: Column 2
-          - text: Second column content
-      - col:
-          - title: Column 3
-          - text: Third column content</pre>
+                </div>
             </div>
-            <pre class="language-wifuframe">page:
+
+            <!-- Layout - Row & Columns -->
+            <div class="example-grid grid grid-cols-2 gap-6">
+                <div class="yaml-source">
+                    <pre>page:
   - row:
       - col:
           - title: Column 1
@@ -165,14 +126,26 @@
       - col:
           - title: Column 3
           - text: Third column content</pre>
-        </div>
-    </div>
+                </div>
+                <div class="w-1/2 mx-auto">
+                    <pre class="language-wifuframe">page:
+  - row:
+      - col:
+          - title: Column 1
+          - text: First column content
+      - col:
+          - title: Column 2
+          - text: Second column content
+      - col:
+          - title: Column 3
+          - text: Third column content</pre>
+                </div>
+            </div>
 
-    <div class="example">
-        <h2>Card Block</h2>
-        <div class="example-grid">
-            <div class="yaml-source">
-                <pre>page:
+            <!-- Card Block -->
+            <div class="example-grid grid grid-cols-2 gap-6">
+                <div class="yaml-source">
+                    <pre>page:
   - block:
       - title: Card Title
       - text: Card description text
@@ -184,8 +157,9 @@
           - button:
               text: Save
               type: primary</pre>
-            </div>
-            <pre class="language-wifuframe">page:
+                </div>
+                <div class="w-1/2 mx-auto">
+                    <pre class="language-wifuframe">page:
   - block:
       - title: Card Title
       - text: Card description text
@@ -197,14 +171,13 @@
           - button:
               text: Save
               type: primary</pre>
-        </div>
-    </div>
+                </div>
+            </div>
 
-    <div class="example">
-        <h2>Form Elements</h2>
-        <div class="example-grid">
-            <div class="yaml-source">
-                <pre>page:
+            <!-- Form Elements -->
+            <div class="example-grid grid grid-cols-2 gap-6">
+                <div class="yaml-source">
+                    <pre>page:
   - title: Login Form
   - text: Please enter your credentials
   - input:
@@ -217,8 +190,9 @@
           type: primary
       - button:
           text: Forgot Password</pre>
-            </div>
-            <pre class="language-wifuframe">page:
+                </div>
+                <div class="w-1/2 mx-auto">
+                    <pre class="language-wifuframe">page:
   - title: Login Form
   - text: Please enter your credentials
   - input:
@@ -231,32 +205,31 @@
           type: primary
       - button:
           text: Forgot Password</pre>
-        </div>
-    </div>
-
-    <div class="example">
-        <h2>Image Placeholder</h2>
-        <div class="example-grid">
-            <div class="yaml-source">
-                <pre>page:
-  - title: Gallery
-  - image: Product Photo
-  - image: Another Image
-  - image: Third Image</pre>
+                </div>
             </div>
-            <pre class="language-wifuframe">page:
+
+            <!-- Image Placeholder -->
+            <div class="example-grid grid grid-cols-2 gap-6">
+                <div class="yaml-source">
+                    <pre>page:
   - title: Gallery
   - image: Product Photo
   - image: Another Image
   - image: Third Image</pre>
-        </div>
-    </div>
+                </div>
+                <div class="w-1/2 mx-auto">
+                    <pre class="language-wifuframe">page:
+  - title: Gallery
+  - image: Product Photo
+  - image: Another Image
+  - image: Third Image</pre>
+                </div>
+            </div>
 
-    <div class="example">
-        <h2>Device Preview - Mobile</h2>
-        <div class="example-grid">
-            <div class="yaml-source">
-                <pre>---
+            <!-- Device Preview - Mobile -->
+            <div class="example-grid grid grid-cols-2 gap-6">
+                <div class="yaml-source">
+                    <pre>---
 device: mobile
 page:
   - title: Mobile App
@@ -269,8 +242,9 @@ page:
   - button:
       text: Get Started
       type: primary</pre>
-            </div>
-            <pre class="language-wifuframe">---
+                </div>
+                <div class="w-1/2 mx-auto">
+                    <pre class="language-wifuframe">---
 device: mobile
 page:
   - title: Mobile App
@@ -283,14 +257,13 @@ page:
   - button:
       text: Get Started
       type: primary</pre>
-        </div>
-    </div>
+                </div>
+            </div>
 
-    <div class="example">
-        <h2>Device Preview - Desktop</h2>
-        <div class="example-grid">
-            <div class="yaml-source">
-                <pre>---
+            <!-- Device Preview - Desktop -->
+            <div class="example-grid grid grid-cols-2 gap-6">
+                <div class="yaml-source">
+                    <pre>---
 device: desktop
 page:
   - title: Desktop Dashboard
@@ -304,8 +277,9 @@ page:
       - block:
           - title: Growth
           - text: +23%</pre>
-            </div>
-            <pre class="language-wifuframe">---
+                </div>
+                <div class="w-1/2 mx-auto">
+                    <pre class="language-wifuframe">---
 device: desktop
 page:
   - title: Desktop Dashboard
@@ -319,23 +293,13 @@ page:
       - block:
           - title: Growth
           - text: +23%</pre>
-        </div>
-    </div>
-
-    <div class="example">
-        <h2>Interactive Buttons</h2>
-        <div class="example-grid">
-            <div class="yaml-source">
-                <pre>page:
-  - title: Interactive Demo
-  - button:
-      text: Show Alert
-      alert: Hello from Wifuframe!
-  - button:
-      text: Confirm Action
-      confirm: Are you sure you want to proceed?</pre>
+                </div>
             </div>
-            <pre class="language-wifuframe">page:
+
+            <!-- Interactive Buttons -->
+            <div class="example-grid grid grid-cols-2 gap-6">
+                <div class="yaml-source">
+                    <pre>page:
   - title: Interactive Demo
   - button:
       text: Show Alert
@@ -343,14 +307,23 @@ page:
   - button:
       text: Confirm Action
       confirm: Are you sure you want to proceed?</pre>
-        </div>
-    </div>
+                </div>
+                <div class="w-1/2 mx-auto">
+                    <pre class="language-wifuframe">page:
+  - title: Interactive Demo
+  - button:
+      text: Show Alert
+      alert: Hello from Wifuframe!
+  - button:
+      text: Confirm Action
+      confirm: Are you sure you want to proceed?</pre>
+                </div>
+            </div>
 
-    <div class="example">
-        <h2>Multiple Devices</h2>
-        <div class="example-grid">
-            <div class="yaml-source">
-                <pre>---
+            <!-- Multiple Devices -->
+            <div class="example-grid grid grid-cols-2 gap-6">
+                <div class="yaml-source">
+                    <pre>---
 device:
   - mobile
   - desktop
@@ -363,8 +336,9 @@ page:
       - col:
           - image: Feature 2
           - text: Second feature</pre>
-            </div>
-            <pre class="language-wifuframe">---
+                </div>
+                <div class="w-1/2 mx-auto">
+                    <pre class="language-wifuframe">---
 device:
   - mobile
   - desktop
@@ -377,8 +351,9 @@ page:
       - col:
           - image: Feature 2
           - text: Second feature</pre>
+                </div>
+            </div>
         </div>
     </div>
-
 </body>
 </html>
