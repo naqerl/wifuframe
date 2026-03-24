@@ -32,10 +32,10 @@ build: install
 	@echo "Build complete! Output in dist/"
 
 dev:
-	@echo "Starting dev server on http://localhost:$(PORT)"
+	@echo "Starting dev server on http://0.0.0.0:$(PORT)"
 	@echo "Open showcase.html to see examples"
 	@echo "Press Ctrl+C to stop"
-	@python3 -m http.server $(PORT) --directory . --bind 127.0.0.1
+	@python3 -m http.server $(PORT) --directory . --bind 0.0.0.0
 
 clean:
 	@echo "Cleaning build artifacts..."
