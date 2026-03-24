@@ -1,0 +1,30 @@
+{
+    "name": "wifuframe",
+    "version": "1.0.0",
+    "description": "YAML-based wireframe rendering library for UI mockups",
+    "main": "dist/wifuframe.js",
+    "module": "dist/wifuframe.js",
+    "style": "dist/wifuframe.css",
+    "types": "dist/wifuframe.d.ts",
+    "files": ["dist/", "src/", "README.md"],
+    "scripts": {
+        "check": "biome check --write .",
+        "format": "biome format --write .",
+        "lint": "biome lint --write .",
+        "build": "mkdir -p dist && cp src/wifuframe.js dist/wifuframe.js && cp src/wifuframe.css dist/wifuframe.css"
+    },
+    "devDependencies": {
+        "@biomejs/biome": "^1.9.4"
+    },
+    "peerDependencies": {
+        "js-yaml": "^4.1.0"
+    },
+    "cdn": "https://cdn.jsdelivr.net/npm/wifuframe@latest/dist/wifuframe.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/user/wifuframe.git"
+    },
+    "keywords": ["wireframe", "yaml", "ui", "mockup", "prototype"],
+    "author": "",
+    "license": "MIT"
+}
