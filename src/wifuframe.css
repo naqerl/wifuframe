@@ -157,7 +157,7 @@
 .wf-row {
     display: flex;
     gap: 0.75em;
-    align-items: center;
+    align-items: start;
 }
 
 .wf-col {
