@@ -89,29 +89,15 @@
     }
 
     function getInner(key, text) {
-        const placeholderDiv = (cls) => `<div class="${cls}"></div>`;
-        const labelSpan = (cls, txt) => `<span class="${cls}">${esc(txt)}</span>`;
-
-        switch (key) {
-            case 'image':
-            case 'img':
-                return placeholderDiv('wf-img-ph') + (text ? labelSpan('wf-img-lb', text) : '');
-            case 'qr':
-                return placeholderDiv('wf-qr-ph') + (text ? labelSpan('wf-qr-lb', text) : '');
-            case 'barcode':
-                return placeholderDiv('wf-bc-ph') + (text ? labelSpan('wf-bc-lb', text) : '');
-            case 'avatar':
-                return text || '';
-            case 'dropdown':
-            case 'select':
-                return `<span>${esc(text || 'Select...')}</span><span>▼</span>`;
-            case 'icon':
-                return text || '◆';
-            case 'spacer':
-                return '';
-            default:
-                return esc(text);
+        if (key === 'image') {
+            const placeholder = '<div class="wf-img-ph"></div>';
+            const label = text ? `<span class="wf-img-lb">${esc(text)}</span>` : '';
+            return placeholder + label;
         }
+        if (key === 'spacer') {
+            return '';
+        }
+        return esc(text);
     }
 
     function renderElement(key, val) {
