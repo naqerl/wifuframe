@@ -22,7 +22,7 @@
     "cdn": "https://cdn.jsdelivr.net/npm/wifuframe@latest/dist/wifuframe.js",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/user/wifuframe.git"
+        "url": "git+https://github.com/naqerl/wifuframe.git"
     },
     "keywords": ["wireframe", "yaml", "ui", "mockup", "prototype"],
     "author": "",
