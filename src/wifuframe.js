@@ -104,6 +104,10 @@
     function renderElement(key, val) {
         const def = ELEMENTS[key];
         if (!def) {
+            if (val && typeof val === 'object' && !Array.isArray(val)) {
+                console.error(`[wifuframe] Unknown element "${key}" with object value:`, val);
+                return `<!-- Unknown element: ${esc(key)} -->`;
+            }
             return esc(String(val));
         }
 
