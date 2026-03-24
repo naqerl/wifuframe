@@ -2,6 +2,8 @@
 
 YAML-based wireframe rendering library for UI mockups and prototypes.
 
+**[Live Showcase](https://naqerl.github.io/wifuframe/)** - Interactive examples with live editor
+
 ## Installation
 
 ### Via CDN
