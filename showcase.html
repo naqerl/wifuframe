@@ -193,15 +193,16 @@ page:
 
         function createExampleElement(example, index) {
             const container = document.createElement('div');
-            container.className = 'example-grid grid grid-cols-2 gap-6';
+            container.className = 'example-grid grid gap-6';
+            container.style.gridTemplateColumns = '1fr 2fr';
             
             const editorDiv = document.createElement('div');
             editorDiv.className = 'editor-container';
             editorDiv.style.height = '300px';
             editorDiv.id = `editor-${index}`;
-            
+
             const previewDiv = document.createElement('div');
-            previewDiv.className = 'w-1/2 mx-auto';
+            previewDiv.className = 'w-2/3';
             previewDiv.innerHTML = `<div class="wf">${renderExample(index, example.code)}</div>`;
             previewDiv.id = `preview-${index}`;
             
